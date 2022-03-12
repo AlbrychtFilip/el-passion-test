@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from '../controllers/app.controller';
-import { AppService } from '../services/app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TripModule } from './trips/trip.module';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TripEntity } from './trips/trip.entity';
 
 @Module({
   imports: [
@@ -14,12 +14,11 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [],
+      entities: [TripEntity],
       synchronize: true,
       autoLoadEntities: true,
-    })
+    }),
+    TripModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
-export class AppModule {}
+export class MainModule {}

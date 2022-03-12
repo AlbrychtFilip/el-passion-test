@@ -7,10 +7,10 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Trip {
+export class TripEntity {
   @PrimaryColumn({type: 'uuid'})
   @Generated('uuid')
-  id: number;
+  id: string;
 
   @Column('text')
   start_address: string;
