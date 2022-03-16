@@ -7,10 +7,10 @@ module.exports = {
   "database": process.env.DATABASE_NAME,
   "synchronize": false,
   "logging": false,
-  "entities": ["dist/entities/*.js"],
+  "entities": ["dist/**/*.entity.js"],
   "migrations": ["dist/migrations/*.js"],
   "cli": {
     "entitiesDir": "src/entities",
-    "migrationsDir": "src/migrations",
+    "migrationsDir": "./src/migrations",
   }
 };

@@ -1,16 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { TripRepository } from './trip.repository';
-import { TripEntity } from './trip.entity';
+import { Injectable } from '@nestjs/common';
+import { Trip } from './trip.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TripService {
   constructor(
-    @Inject(TripRepository)
-    private readonly tripRepository: TripRepository
+    @InjectRepository(Trip)
+    private readonly tripRepository: Repository<Trip>
   ) {}
 
-  getWeekly(): Promise<TripEntity[]> {
-    return this.tripRepository.findAll();
+  getWeekly() {
+    return;
   }
 }

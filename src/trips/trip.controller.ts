@@ -1,14 +1,19 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { TripService } from './trip.service';
-import { TripEntity } from './trip.entity';
-import { RequestDto } from './dto/request.dto';
+import { Trip } from './trip.entity';
+import { PostTrip } from './dto/post.trip.dto';
 
-@Controller()
+@Controller('/api')
 export class TripController {
   constructor(private readonly tripService: TripService) {}
 
-  @Post('/api/stats/weekly')
-  getHello(@Body() body: RequestDto): Promise<TripEntity[]> {
+  @Post('/trips')
+  postTrip(@Body() body: PostTrip): Promise<Trip[]> {
     return this.tripService.getWeekly();
+  }
+
+  @Get('/stats/weekly')
+  getWeeklyStats() {
+    
   }
 }

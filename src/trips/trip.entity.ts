@@ -6,23 +6,25 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
-export class TripEntity {
+@Entity({
+  name: 'trips'
+})
+export class Trip {
   @PrimaryColumn({type: 'uuid'})
   @Generated('uuid')
   id: string;
 
   @Column('text')
-  start_address: string;
+  startAddress: string;
 
   @Column('text')
-  destination_address: string;
+  destinationAddress: string;
 
   @Column('float')
   price: number;
 
   @Column('date')
-  delivery_date: Date;
+  deliveryDate: Date;
 
   @CreateDateColumn()
   createdAt: Date;

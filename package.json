@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "generate:migration": "npm run build && typeorm migration:generate -n ",
     "docker:init": "docker-compose --env-file .env up -d",
     "prebuild": "rimraf dist",
     "build": "nest build",
