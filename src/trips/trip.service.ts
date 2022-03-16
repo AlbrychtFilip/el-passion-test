@@ -10,7 +10,7 @@ export class TripService {
     private readonly tripRepository: Repository<Trip>
   ) {}
 
-  getWeekly() {
-    return;
+  addTrip(trip: Trip): Promise<Trip> {
+    return this.tripRepository.save<Trip>(trip);
   }
 }

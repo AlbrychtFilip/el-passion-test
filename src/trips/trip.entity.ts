@@ -12,7 +12,7 @@ import {
 export class Trip {
   @PrimaryColumn({type: 'uuid'})
   @Generated('uuid')
-  id: string;
+  id?: string;
 
   @Column('text')
   startAddress: string;
@@ -23,12 +23,12 @@ export class Trip {
   @Column('float')
   price: number;
 
-  @Column('date')
+  @Column('timestamp')
   deliveryDate: Date;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt?: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt?: Date;
 }

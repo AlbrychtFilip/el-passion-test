@@ -3,6 +3,7 @@ import { TripModule } from './trips/trip.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Trip } from './trips/trip.entity';
+import { MapsModule } from './maps/maps.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { Trip } from './trips/trip.entity';
       synchronize: true,
       autoLoadEntities: true,
     }),
+    MapsModule,
     TripModule
   ],
 })

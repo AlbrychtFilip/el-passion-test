@@ -33,6 +33,7 @@
     "class-validator": "^0.13.2",
     "class-validator-jsonschema": "^3.1.0",
     "dotenv": "^16.0.0",
+    "http-status-codes": "^2.2.0",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

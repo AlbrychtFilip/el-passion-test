@@ -1,4 +1,4 @@
-import { IsDate, IsNumber, IsString } from 'class-validator';
+import { IsISO8601, IsNumber, IsString } from 'class-validator';
 
 export class PostTrip {
   @IsString()
@@ -10,6 +10,6 @@ export class PostTrip {
   @IsNumber()
   public price: number;
 
-  @IsDate()
+  @IsISO8601()
   public date: Date;
 }
