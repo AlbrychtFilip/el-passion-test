@@ -23,6 +23,9 @@ export class Trip {
   @Column('float')
   price: number;
 
+  @Column('float')
+  distance: number;
+
   @Column('timestamp')
   deliveryDate: Date;
 

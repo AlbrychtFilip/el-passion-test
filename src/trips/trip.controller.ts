@@ -19,9 +19,20 @@ export class TripController {
     @Res() res: Response
   ) {
     try {
-      await this.mapsService.calculateDistance(body.start_address, body.destination_address)
+      const distanceInKm = await this.mapsService.calculateDistance(body.start_address, body.destination_address);
+
+      if (!distanceInKm) {
+        return res
+          .status(StatusCodes.NOT_FOUND)
+          .json({
+            status: StatusCodes.NOT_FOUND,
+            message: 'Address not found.'
+          })
+      }
+
       await this.tripService.addTrip({
         deliveryDate: body.date,
+        distance: distanceInKm,
         destinationAddress: body.destination_address,
         price: body.price,
         startAddress: body.start_address
@@ -29,7 +40,7 @@ export class TripController {
 
       return res.status(StatusCodes.CREATED).end();
     } catch (e) {
-      console.log(e)
+      console.error('postTrip error: ', e)
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({
@@ -40,12 +51,27 @@ export class TripController {
   }
 
   @Get('/stats/:type')
-  getStats(@Param() params: GetStats) {
-    if (params.type === Stats.WEEKLY) {
-    } else if (params.type === Stats.MONTHLY) {
+  async getStats(@Param() params: GetStats, @Res() res: Response) {
+    try {
+      if (params.type === Stats.WEEKLY) {
+        const weeklyStats = await this.tripService.getWeeklyStats()
 
-    } else {
+        return res.json(weeklyStats)
+      } else if (params.type === Stats.MONTHLY) {
+        const monthlyStats = await this.tripService.getMonthlyStats()
 
+        return res.json(monthlyStats)
+      } else {
+        return res.json({})
+      }
+    } catch (e) {
+      console.error('getStats error: ', e)
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({
+          status: StatusCodes.INTERNAL_SERVER_ERROR,
+          message: 'Internal Server Error.'
+        });
     }
   }
 }
