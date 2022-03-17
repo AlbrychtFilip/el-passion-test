@@ -5,7 +5,17 @@ import { Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { GetStats, Stats } from './dto/get.stats.dto';
 import { MapsService } from '../maps/maps.service';
+import {
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse, ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+  getSchemaPath,
+} from '@nestjs/swagger';
+import { GetStatsMonthly200Dto, GetStatsWeekly200Dto } from './dto/get.stats.200.dto';
+import { ErrorDto } from '../dto/error.dto';
 
+@ApiTags('Trips')
 @Controller('/api')
 export class TripController {
   constructor(
@@ -14,6 +24,17 @@ export class TripController {
   ) {}
 
   @Post('/trips')
+  @ApiInternalServerErrorResponse({
+    type: ErrorDto,
+    description: 'Internal server error.'
+  })
+  @ApiNotFoundResponse({
+    type: ErrorDto,
+    description: 'Address not found.'
+  })
+  @ApiCreatedResponse({
+    description: 'Trip has been successfully added.'
+  })
   async postTrip(
     @Body() body: PostTrip,
     @Res() res: Response
@@ -51,6 +72,23 @@ export class TripController {
   }
 
   @Get('/stats/:type')
+  @ApiInternalServerErrorResponse({
+    type: ErrorDto,
+    description: 'Internal server error.'
+  })
+  @ApiOkResponse({
+    schema: {
+      oneOf: [
+        {
+          type: 'array',
+          items: {
+            $ref: getSchemaPath(GetStatsMonthly200Dto)
+          }
+        },
+        { $ref: getSchemaPath(GetStatsWeekly200Dto) }
+      ]
+    }
+  })
   async getStats(@Param() params: GetStats, @Res() res: Response) {
     try {
       if (params.type === Stats.WEEKLY) {
