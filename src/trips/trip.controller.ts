@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res, UseGuards } from '@nestjs/common';
 import { TripService } from './trip.service';
 import { PostTrip } from './dto/post.trip.dto';
 import { Response } from 'express';
@@ -14,6 +14,7 @@ import {
 } from '@nestjs/swagger';
 import { GetStatsMonthly200Dto, GetStatsWeekly200Dto } from './dto/get.stats.200.dto';
 import { ErrorDto } from '../dto/error.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Trips')
 @Controller('/api')
@@ -23,6 +24,7 @@ export class TripController {
     private readonly mapsService: MapsService,
   ) {}
 
+  @UseGuards(AuthGuard('basic'))
   @Post('/trips')
   @ApiInternalServerErrorResponse({
     type: ErrorDto,
@@ -72,6 +74,7 @@ export class TripController {
   }
 
   @Get('/stats/:type')
+  @UseGuards(AuthGuard('basic'))
   @ApiInternalServerErrorResponse({
     type: ErrorDto,
     description: 'Internal server error.'
